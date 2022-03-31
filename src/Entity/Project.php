@@ -5,10 +5,13 @@ namespace App\Entity;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ProjectRepository::class)
+ * @Vich\Uploadable
  */
 class Project
 {
@@ -45,9 +48,33 @@ class Project
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity=Link::class, mappedBy="project", cascade={"persist", "remove"})
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $links;
+    private $github;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $website;
+
+    /** 
+     * @Vich\UploadableField(mapping="image", fileNameProperty="thumbnail")
+     * @var File|null
+     */
+   private $thumbnailFile;
+
+
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTimeInterface|null
+     */
+    private $updatedAt;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $thumbnail;
 
     public function __construct()
     {
@@ -119,32 +146,54 @@ class Project
         return $this;
     }
 
-    /**
-     * @return Collection<int, Link>
-     */
-    public function getLinks(): Collection
+    public function getGithub(): ?string
     {
-        return $this->links;
+        return $this->github;
     }
 
-    public function addLink(Link $link): self
+    public function setGithub(?string $github): self
     {
-        if (!$this->links->contains($link)) {
-            $this->links[] = $link;
-            $link->setProject($this);
-        }
+        $this->github = $github;
 
         return $this;
     }
 
-    public function removeLink(Link $link): self
+    public function getWebsite(): ?string
     {
-        if ($this->links->removeElement($link)) {
-            // set the owning side to null (unless already changed)
-            if ($link->getProject() === $this) {
-                $link->setProject(null);
-            }
+        return $this->website;
+    }
+
+    public function setWebsite(?string $website): self
+    {
+        $this->website = $website;
+
+        return $this;
+    }
+
+    public function setThumbnailFile(?File $thumbnailFile = null): void
+    {
+        $this->thumbnailFile = $thumbnailFile;
+
+        if (null !== $thumbnailFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
         }
+    }
+
+    public function getThumbnailFile(): ?File
+    {
+        return $this->thumbnailFile;
+    }
+
+    public function getThumbnail(): ?string
+    {
+        return $this->thumbnail;
+    }
+
+    public function setThumbnail(?string $thumbnail): self
+    {
+        $this->thumbnail = $thumbnail;
 
         return $this;
     }

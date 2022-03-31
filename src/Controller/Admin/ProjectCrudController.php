@@ -5,10 +5,13 @@ namespace App\Controller\Admin;
 use App\Form\LinkType;
 use App\Entity\Project;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -38,11 +41,10 @@ class ProjectCrudController extends AbstractCrudController
             TextField::new('short_description', 'Description courte'),
             TextEditorField::new('description', "Description"),
             BooleanField::new('is_visible', "Visibilité"),
-            CollectionField::new('links', 'Liens')
-            ->setEntryType(LinkType::class)
-            ->setFormTypeOption('by_reference', false)
-            ->onlyOnForms(),
-            AssociationField::new('category', 'Catégorie')
+            AssociationField::new('category', 'Catégorie'),
+            UrlField::new('github', 'Github'),
+            UrlField::new('website', 'Site'),
+            TextareaField::new('thumbnailFile', 'Thumbnail')->setFormType(VichImageType::class),
         ];
     }
 
