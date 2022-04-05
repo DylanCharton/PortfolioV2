@@ -44,7 +44,12 @@ class ProjectCrudController extends AbstractCrudController
             AssociationField::new('category', 'Catégorie'),
             UrlField::new('github', 'Github'),
             UrlField::new('website', 'Site'),
-            TextareaField::new('thumbnailFile', 'Thumbnail')->setFormType(VichImageType::class),
+            TextareaField::new('thumbnailFile', 'Thumbnail')
+                ->setFormType(VichImageType::class)
+                ->setHelp("Choisissez l'image qui sera sur la page principale"),
+            TextareaField::new('mockupFile', 'Mockup')
+            ->setFormType(VichImageType::class)
+            ->setHelp("Choisissez l'image qui sera sur le détail du projet"),
         ];
     }
 

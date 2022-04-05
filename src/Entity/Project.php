@@ -62,6 +62,11 @@ class Project
      * @var File|null
      */
    private $thumbnailFile;
+    /** 
+     * @Vich\UploadableField(mapping="mockup", fileNameProperty="mockup")
+     * @var File|null
+     */
+   private $mockupFile;
 
 
     /**
@@ -75,6 +80,10 @@ class Project
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $thumbnail;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $mockup;
 
     public function __construct()
     {
@@ -196,5 +205,32 @@ class Project
         $this->thumbnail = $thumbnail;
 
         return $this;
+    }
+    public function getMockup(): ?string
+    {
+        return $this->mockup;
+    }
+
+    public function setMockup(?string $mockup): self
+    {
+        $this->mockup = $mockup;
+
+        return $this;
+    }
+
+    public function getMockupFile(): ?File
+    {
+        return $this->mockupFile;
+    }
+
+    public function setMockupFile(?File $mockupFile = null): void
+    {
+        $this->mockupFile = $mockupFile;
+
+        if (null !== $mockupFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
 }
