@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
@@ -46,10 +47,17 @@ class ProjectCrudController extends AbstractCrudController
             UrlField::new('website', 'Site'),
             TextareaField::new('thumbnailFile', 'Thumbnail')
                 ->setFormType(VichImageType::class)
-                ->setHelp("Choisissez l'image qui sera sur la page principale"),
+                ->setHelp("Choisissez l'image qui sera sur la page principale")
+                ->onlyOnForms(),
             TextareaField::new('mockupFile', 'Mockup')
             ->setFormType(VichImageType::class)
-            ->setHelp("Choisissez l'image qui sera sur le détail du projet"),
+            ->setHelp("Choisissez l'image qui sera sur le détail du projet")
+            ->onlyOnForms(),
+            ImageField::new('thumbnail')->setBasePath('upload/thumbnail/')
+            ->onlyOnIndex(),
+            ImageField::new('mockup')->setBasePath('upload/mockup/')
+            ->onlyOnIndex(),
+
         ];
     }
 
