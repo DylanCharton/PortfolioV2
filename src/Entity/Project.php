@@ -33,7 +33,7 @@ class Project
     private $shortDescription;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $description;
 
@@ -62,6 +62,7 @@ class Project
      * @var File|null
      */
    private $thumbnailFile;
+
     /** 
      * @Vich\UploadableField(mapping="mockup", fileNameProperty="mockup")
      * @var File|null

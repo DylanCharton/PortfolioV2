@@ -2,19 +2,21 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ProjectRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ProjectController extends AbstractController
 {
     /**
      * @Route("/projects", name="projects")
      */
-    public function index(): Response
+    public function index(ProjectRepository $repo): Response
     {
-        return $this->render('project/index.html.twig', [
-            'controller_name' => 'ProjectController',
-        ]);
+
+        $projects = $repo->findByVisibility(1);
+        return $this->render('project/index.html.twig', compact('projects'));
     }
 }

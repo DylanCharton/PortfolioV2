@@ -7,6 +7,9 @@
         <div class="d-flex justify-content-center">
             <h1 class="pt-4">Mes projets</h1>
         </div>
+        {% for project in projects %}
+            <div>{{project.title}}</div>
+        {% endfor %}
     
     </div>
 
