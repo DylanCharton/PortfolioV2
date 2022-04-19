@@ -57,6 +57,7 @@ class ProjectCrudController extends AbstractCrudController
             ->onlyOnIndex(),
             ImageField::new('mockup')->setBasePath('upload/mockup/')
             ->onlyOnIndex(),
+            AssociationField::new('technologies', 'Technologies')
 
         ];
     }

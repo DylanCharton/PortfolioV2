@@ -86,9 +86,15 @@ class Project
      */
     private $mockup;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Technology::class, inversedBy="projects")
+     */
+    private $technologies;
+
     public function __construct()
     {
         $this->links = new ArrayCollection();
+        $this->technologies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -233,5 +239,29 @@ class Project
             // otherwise the event listeners won't be called and the file is lost
             $this->updatedAt = new \DateTimeImmutable();
         }
+    }
+
+    /**
+     * @return Collection<int, Technology>
+     */
+    public function getTechnologies(): Collection
+    {
+        return $this->technologies;
+    }
+
+    public function addTechnology(Technology $technology): self
+    {
+        if (!$this->technologies->contains($technology)) {
+            $this->technologies[] = $technology;
+        }
+
+        return $this;
+    }
+
+    public function removeTechnology(Technology $technology): self
+    {
+        $this->technologies->removeElement($technology);
+
+        return $this;
     }
 }
