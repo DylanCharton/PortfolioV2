@@ -7,9 +7,15 @@
         <div class="d-flex justify-content-center">
             <h1 class="pt-4">Mes projets</h1>
         </div>
-        {% for project in projects %}
-            <div>{{project.title}}</div>
-        {% endfor %}
+
+        <div class="d-flex justify-content-center">
+            {% for project in projects %}
+                <div class="project-thumbnail col-4">
+                    <img src="{{ vich_uploader_asset(project, 'thumbnailFile')}}" alt="Mockup du projet">
+                </div> 
+            {% endfor %}
+        </div>
+        
     
     </div>
 
