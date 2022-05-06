@@ -15,7 +15,6 @@ class ProjectController extends AbstractController
      */
     public function index(ProjectRepository $repo): Response
     {
-
         $projects = $repo->findByVisibility(1);
         return $this->render('project/index.html.twig', compact('projects'));
     }

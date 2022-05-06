@@ -15,8 +15,10 @@
         {% include '/_partials/_header.html.twig' %}
         {% block body %}{% endblock %}
         {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+            
             <script src="https://kit.fontawesome.com/4c630a520d.js" crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/scrollreveal"></script>
+            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </body>
 </html>
